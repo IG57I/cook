@@ -21,7 +21,7 @@ for c in tqdm(range(len(cvDF.groupby(['T']).sum()))):
     
 #  heatmap можно посмотреть частоту коррелирующих признаков
 cv = CountVectorizer(min_df=0.02, max_df=0.5)
-cvA = cv.fit_transform(data1_2['Краткое\nсодержание'].str.cat(data1_2['Должность_автора'])).toarray()
+cvA = cv.fit_transform(data).toarray()
 cvDF = pd.DataFrame(cvA, columns=cv.get_feature_names())
 corr = cvDF.corr()
 plt.figure(figsize=(15,10))
