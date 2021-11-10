@@ -43,3 +43,12 @@ def missing (df):
     return missing_values
 
 missing(df)
+#view pandas
+# Сброс ограничений на количество выводимых рядов
+pd.set_option('display.max_rows', None)
+ 
+# Сброс ограничений на число столбцов
+pd.set_option('display.max_columns', None)
+ 
+# Сброс ограничений на количество символов в записи
+pd.set_option('display.max_colwidth', None)
