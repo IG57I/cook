@@ -1,5 +1,17 @@
 #https://russianblogs.com/article/40391171020/ ------add in jupiter
 
+#import
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import pymorphy2
+import re
+import numpy as np
+import scipy.stats as ss
+from sklearn.feature_extraction.text import CountVectorizer
+import wordcloud
+from wordcloud import WordCloud
+
 # для кат калонок
 Что нам нужно, это то, что будетсмотретькак корреляция, но будет работать с категориальными значениями - или, более формально, мы ищеммера ассоциациимежду двумя категориальными чертами. Вводя:Крамер V, Он основан на номинальном измененииКритерий хи-квадрат Пирсонаи поставляется со встроенными преимуществами:
 def cramers_v(x, y):
