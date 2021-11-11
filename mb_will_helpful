@@ -1,7 +1,21 @@
 #https://russianblogs.com/article/40391171020/ ------add in jupiter
+
+# для кат калонок
+def cramers_v(x, y):
+    confusion_matrix = pd.crosstab(x,y)
+    chi2 = ss.chi2_contingency(confusion_matrix)[0]
+    n = confusion_matrix.sum().sum()
+    phi2 = chi2/n
+    r,k = confusion_matrix.shape
+    phi2corr = max(0, phi2-((k-1)*(r-1))/(n-1))
+    rcorr = r-((r-1)**2)/(n-1)
+    kcorr = k-((k-1)**2)/(n-1)
+    return np.sqrt(phi2corr/min((kcorr-1),(rcorr-1)))
+    
 #график для подсчета
 sns.barplot(data[''].value_counts().loc[lambda x : x > 3].index,data[''].value_counts().loc[lambda x : x > 3].values)
 plt.xticks(rotation=90);
+
 #визуализация wordcloud
 for c in tqdm(range(len(cvDF.groupby(['T']).sum()))):
     w=[]
@@ -45,12 +59,11 @@ def missing (df):
     return missing_values
 
 missing(df)
+
 #view pandas
 # Сброс ограничений на количество выводимых рядов
 pd.set_option('display.max_rows', None)
- 
 # Сброс ограничений на число столбцов
 pd.set_option('display.max_columns', None)
- 
 # Сброс ограничений на количество символов в записи
 pd.set_option('display.max_colwidth', None)
