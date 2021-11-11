@@ -1,5 +1,7 @@
 #https://russianblogs.com/article/40391171020/ ------add in jupiter
-
+#график для подсчета
+sns.barplot(data[''].value_counts().loc[lambda x : x > 3].index,data[''].value_counts().loc[lambda x : x > 3].values)
+plt.xticks(rotation=90);
 #визуализация wordcloud
 for c in tqdm(range(len(cvDF.groupby(['T']).sum()))):
     w=[]
