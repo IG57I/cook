@@ -153,3 +153,51 @@ data3_2['char_count'] = data3_2["X"].apply(lambda x: sum(len(word) for word in s
 data3_2['avg_word_length'] = data3_2['char_count'] / data3_2['word_count'] # средняя длинна слова
 data3_2['unique_word_count'] = data3_2["X"].apply(lambda x:len(set(x.split()))) # количество уникальых слов
 data3_2['unique_vs_words'] = data3_2['unique_word_count']/data3_2['word_count'] # частота уникальных слов
+--------------------------------------------------------------------------------------------
+https://dev-gang.ru/article/sozdaite-prostoi-czat-bot-s-python-i-google-search-wptggrso22/
+https://www.kaggle.com/pompelmo/chaieda-police-violence/notebook
+state_geo = ''
+import json
+with open(state_geo, encoding="utf8") as f:
+    map_data = json.load(f)
+    
+import pandas as pd
+from pandas.io.json import json_normalize
+df = json_normalize(map_data["features"])
+
+coords = 'geometry.coordinates'
+
+df2 = (df[coords].apply(lambda r: [(i[0],i[1]) for i in r[0]])
+           .apply(pd.Series).stack()
+           .reset_index(level=1).rename(columns={0:coords,"level_1":"point"})
+           .join(df.drop(coords,1), how='left')).reset_index(level=0)
+
+df2[['lat','long']] = df2[coords].apply(pd.Series)
+
+df2  
+
+
+states_order = [state['id'] for state in map_data['features']]
+for idx in range(len(states_order)):
+        map_data['features'][idx]['properties']['int'] = int(data[data['id'] == states_order[idx]]['index'].values[0])
+
+map_b = folium.Map(location=[37, -102], zoom_start=5)
+
+chorop_map = folium.Choropleth(
+    geo_data=map_data,
+    name='choropleth',
+    data=data,
+    columns=['id','index'],
+    key_on='feature.id',
+    fill_color='YlOrRd',
+    fill_opacity=0.7,
+    line_opacity=0.2,
+    legend_name='Number of police kills every 1M ppl by state',
+    highlight=True
+).add_to(map_b)
+
+folium.LayerControl().add_to(map_b)
+chorop_map.geojson.add_child(
+    folium.features.GeoJsonTooltip(['name','int'])
+)
+map_b
