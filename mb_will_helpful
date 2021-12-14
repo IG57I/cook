@@ -98,6 +98,21 @@ cvDF = pd.DataFrame(cvA, columns=cv.get_feature_names())
 corr = cvDF.corr()
 plt.figure(figsize=(15,10))
 sns.heatmap(corr)
+# круги для кат колонок
+i=0
+sns.set_style('whitegrid')
+for column in cat_cols:
+  i+=1
+  plt.subplot(6,5,i) # делаем мулти график 5Х6
+  data[column].value_counts().plot.pie(figsize=(30, 30),autopct='%.0f%%')
+  plt.legend(data[column].value_counts().index, title=data[column].value_counts().name)
+# 
+g = sns.PairGrid(data, hue='HeartDisease',corner=True)
+g.map_lower(sns.scatterplot)
+g.map_diag(plt.hist)
+g.add_legend()
+# 
+ff.create_scatterplotmatrix(data[['Age', 'RestingBP', 'Cholesterol', 'FastingBS', 'MaxHR', 'Oldpeak','HeartDisease']],diag='histogram',index='HeartDisease',height=1000, width=1000, size=6)
 ---------------------Визуализация данных----------------------------------
 
 ---------------------Работа с текстом----------------------------------
@@ -156,6 +171,7 @@ data3_2['unique_vs_words'] = data3_2['unique_word_count']/data3_2['word_count'] 
 --------------------------------------------------------------------------------------------
 https://dev-gang.ru/article/sozdaite-prostoi-czat-bot-s-python-i-google-search-wptggrso22/
 https://www.kaggle.com/pompelmo/chaieda-police-violence/notebook
+https://towardsdatascience.com/ml-pipelines-with-grid-search-in-scikit-learn-2539d6b53cfb
 state_geo = ''
 import json
 with open(state_geo, encoding="utf8") as f:
